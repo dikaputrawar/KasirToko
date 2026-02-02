@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori Barang')
+@section('title', 'Kategori Barang - WarungKu')
 
 @section('content')
 <div class="row justify-content-center">
@@ -13,6 +13,9 @@
             <div class="card-body">
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped align-middle">
@@ -28,11 +31,7 @@
                                 <td>{{ $kategori->nama }}</td>
                                 <td>
                                     <a href="{{ route('kategori.edit', $kategori->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm">Hapus</button>
-                                    </form>
+                                    <a href="{{ route('kategori.delete', $kategori->id) }}" class="btn btn-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
                             @empty

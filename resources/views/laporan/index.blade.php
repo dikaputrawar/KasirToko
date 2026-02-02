@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Laporan Transaksi')
+@section('title', 'Laporan Transaksi - WarungKu')
 
 @section('content')
 <div class="row mb-4">
@@ -37,6 +37,7 @@
                         <th>Bayar</th>
                         <th>Kembalian</th>
                         <th>Detail Barang</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,9 +54,14 @@
                                 @endforeach
                             </ul>
                         </td>
+                        <td>
+                            <a href="{{ route('kasir.resi', $trx->id) }}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fas fa-print"></i> Cetak Resi
+                            </a>
+                        </td>
                     </tr>
                     @empty
-                    <tr><td colspan="5" class="text-center">Belum ada transaksi</td></tr>
+                    <tr><td colspan="6" class="text-center">Belum ada transaksi</td></tr>
                     @endforelse
                 </tbody>
             </table>

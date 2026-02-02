@@ -154,10 +154,17 @@ class KasirController extends Controller
             }
             DB::commit();
             session()->forget('cart');
-            return redirect()->route('kasir.index')->with('success', 'Transaksi berhasil disimpan!');
+            return redirect()->route('kasir.resi', $transaksi->id)->with('success', 'Transaksi berhasil disimpan!');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', $e->getMessage());
         }
+    }
+
+    // Tampilkan resi transaksi
+    public function resi($id)
+    {
+        $transaksi = Transaksi::with(['details.barang', 'user'])->findOrFail($id);
+        return view('kasir.resi', compact('transaksi'));
     }
 }

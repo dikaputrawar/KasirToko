@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/dashboard');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Kasir
 Route::get('/kasir', [App\Http\Controllers\KasirController::class, 'index'])->name('kasir.index');
@@ -10,11 +12,13 @@ Route::post('/kasir/scan', [App\Http\Controllers\KasirController::class, 'scan']
 Route::post('/kasir/simpan', [App\Http\Controllers\KasirController::class, 'simpan'])->name('kasir.simpan');
 Route::post('/kasir/update-qty', [App\Http\Controllers\KasirController::class, 'updateQty'])->name('kasir.updateQty');
 Route::post('/kasir/remove-item', [App\Http\Controllers\KasirController::class, 'removeItem'])->name('kasir.removeItem');
+Route::get('/kasir/resi/{id}', [App\Http\Controllers\KasirController::class, 'resi'])->name('kasir.resi');
 
 // Barang (stok)
 Route::resource('stok', App\Http\Controllers\BarangController::class);
 
 // Kategori Barang
+Route::get('/kategori/{id}/delete', [App\Http\Controllers\KategoriBarangController::class, 'delete'])->name('kategori.delete');
 Route::resource('kategori', App\Http\Controllers\KategoriBarangController::class);
 
 // Dashboard

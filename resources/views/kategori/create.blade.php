@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Kategori')
+@section('title', 'Tambah Kategori - WarungKu')
 
 @section('content')
 <div class="row justify-content-center">

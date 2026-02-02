@@ -67,12 +67,79 @@ class KategoriBarangController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show the form for deleting the specified resource.
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $kategori = KategoriBarang::findOrFail($id);
-        $kategori->delete();
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+        $productCount = $kategori->barangs()->count();
+        $otherKategoris = KategoriBarang::where('id', '!=', $id)->get();
+        
+        // Get detailed information about associated products and their transactions
+        $products = $kategori->barangs()->with('transaksiDetails')->get();
+        $totalTransactions = 0;
+        foreach ($products as $product) {
+            $totalTransactions += $product->transaksiDetails->count();
+        }
+        
+        return view('kategori.delete', compact('kategori', 'productCount', 'otherKategoris', 'products', 'totalTransactions'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Request $request, $id)
+    {
+        $kategori = KategoriBarang::findOrFail($id);
+        $action = $request->input('action', 'check');
+        
+        // Check if category has associated products
+        if ($kategori->barangs()->count() > 0) {
+            if ($action === 'cascade') {
+                // Database will handle cascade deletion automatically
+                $kategori->delete();
+                return redirect()->route('kategori.index')
+                    ->with('success', 'Kategori dan semua produk terkait berhasil dihapus!');
+            } elseif ($action === 'soft_delete') {
+                // Soft delete - mark as deleted but keep data
+                $kategori->delete(); // This will now use soft delete
+                return redirect()->route('kategori.index')
+                    ->with('success', 'Kategori berhasil dihapus (data tetap tersimpan)!');
+            } elseif ($action === 'reassign' && $request->has('new_kategori_id')) {
+                // Reassign products to another category
+                $newKategoriId = $request->input('new_kategori_id');
+                $kategori->barangs()->update(['kategori_id' => $newKategoriId]);
+                $kategori->delete();
+                return redirect()->route('kategori.index')
+                    ->with('success', 'Kategori berhasil dihapus dan produk telah dipindahkan!');
+            } else {
+                return redirect()->route('kategori.delete', $id)
+                    ->with('error', 'Kategori memiliki produk terkait. Silakan pilih tindakan yang sesuai.');
+            }
+        }
+        
+        try {
+            $kategori->delete();
+            return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('kategori.index')
+                ->with('error', 'Terjadi kesalahan saat menghapus kategori. Silakan coba lagi.');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage (simple version).
+     */
+    public function destroySimple($id)
+    {
+        $kategori = KategoriBarang::findOrFail($id);
+        
+        try {
+            $kategori->delete();
+            return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('kategori.index')
+                ->with('error', 'Terjadi kesalahan saat menghapus kategori. Silakan coba lagi.');
+        }
     }
 }

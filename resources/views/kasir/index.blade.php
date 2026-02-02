@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Kasir')
+@section('title', 'Kasir - WarungKu')
 
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card mb-3">
-            <div class="card-header">Transaksi Kasir</div>
+            <div class="card-header">Transaksi Kasir - WarungKu</div>
             <div class="card-body">
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>
