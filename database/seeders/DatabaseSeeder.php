@@ -13,11 +13,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Seed default users for the application
+        User::updateOrCreate(
+            ['email' => 'admin@warungapp.local'],
+            [
+                'name' => 'Admin',
+                'password' => 'password', // will be hashed by model cast
+                'role' => 'admin',
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'kasir@warungapp.local'],
+            [
+                'name' => 'Kasir',
+                'password' => 'password', // will be hashed by model cast
+                'role' => 'kasir',
+            ]
+        );
     }
 }
