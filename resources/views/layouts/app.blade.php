@@ -17,7 +17,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+<<<<<<< HEAD
             <ul class="navbar-nav me-auto">
+=======
+            <ul class="navbar-nav">
+>>>>>>> 5d9325a136ee3825db265c959c70ef449ecac11d
                 <li class="nav-item"><a class="nav-link" href="/kasir">Kasir</a></li>
                 <li class="nav-item"><a class="nav-link" href="/stok">Stok</a></li>
                 <li class="nav-item"><a class="nav-link" href="/kategori">Kategori</a></li>
@@ -25,6 +29,7 @@
                 <li class="nav-item"><a class="nav-link" href="/analisis">Analisis</a></li>
                 <li class="nav-item"><a class="nav-link" href="/laporan">Laporan</a></li>
             </ul>
+<<<<<<< HEAD
             @auth
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -40,6 +45,8 @@
                 </li>
             </ul>
             @endauth
+=======
+>>>>>>> 5d9325a136ee3825db265c959c70ef449ecac11d
         </div>
     </div>
 </nav>
