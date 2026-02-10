@@ -16,6 +16,8 @@ Route::middleware(['auth', 'role:kasir,admin'])->group(function () {
     Route::post('/kasir/update-qty', [App\Http\Controllers\KasirController::class, 'updateQty'])->name('kasir.updateQty');
     Route::post('/kasir/remove-item', [App\Http\Controllers\KasirController::class, 'removeItem'])->name('kasir.removeItem');
     Route::get('/kasir/resi/{id}', [App\Http\Controllers\KasirController::class, 'resi'])->name('kasir.resi');
+    // Lihat stok read-only untuk kasir
+    Route::get('/stok-view', [App\Http\Controllers\StokViewController::class, 'index'])->name('stok.view');
 });
 
 // Admin only

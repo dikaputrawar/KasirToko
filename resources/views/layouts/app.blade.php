@@ -17,36 +17,39 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-<<<<<<< HEAD
             <ul class="navbar-nav me-auto">
-=======
-            <ul class="navbar-nav">
->>>>>>> 5d9325a136ee3825db265c959c70ef449ecac11d
-                <li class="nav-item"><a class="nav-link" href="/kasir">Kasir</a></li>
-                <li class="nav-item"><a class="nav-link" href="/stok">Stok</a></li>
-                <li class="nav-item"><a class="nav-link" href="/kategori">Kategori</a></li>
-                <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="/analisis">Analisis</a></li>
-                <li class="nav-item"><a class="nav-link" href="/laporan">Laporan</a></li>
+                @guest
+                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                @endguest
+                @auth
+                    @if(Auth::user()->role === 'kasir')
+                        <li class="nav-item"><a class="nav-link" href="/kasir">Kasir</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('stok.view') }}">Lihat Stok</a></li>
+                    @elseif(Auth::user()->role === 'admin')
+                        <li class="nav-item"><a class="nav-link" href="/kasir">Kasir</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/stok">Stok</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/kategori">Kategori</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/analisis">Analisis</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/laporan">Laporan</a></li>
+                    @endif
+                @endauth
             </ul>
-<<<<<<< HEAD
             @auth
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <span class="nav-link">{{ Auth::user()->name }}</span>
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-light btn-sm">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    </form>
-                </li>
-            </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <span class="nav-link">{{ Auth::user()->name }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light btn-sm">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             @endauth
-=======
->>>>>>> 5d9325a136ee3825db265c959c70ef449ecac11d
         </div>
     </div>
 </nav>
