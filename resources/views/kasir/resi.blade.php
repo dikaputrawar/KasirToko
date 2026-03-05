@@ -90,7 +90,7 @@
 <body>
     <div class="receipt">
         <div class="header">
-            <h1>WARUNGKU</h1>
+            <h1>SOBATWARUNGKU</h1>
             <p>Jl. Contoh No. 123</p>
             <p>Telp: (021) 1234-5678</p>
             <p>{{ $transaksi->created_at->format('d/m/Y H:i') }}</p>
@@ -124,7 +124,7 @@
 
         <div class="footer">
             <p>Terima kasih telah berbelanja</p>
-            <p>di WarungKu</p>
+            <p>di Sobatwarungku</p>
             <p>Barang yang sudah dibeli</p>
             <p>tidak dapat dikembalikan</p>
         </div>

@@ -31,28 +31,28 @@
 
         <!-- Table -->
         <div class="overflow-x-auto">
-            <table class="min-w-full text-sm text-left text-gray-600">
-                <thead class="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+            <table class="min-w-full text-sm text-left border border-gray-200">
+                <thead class="bg-gray-100">
                     <tr>
-                        <th class="px-6 py-3 text-left">Kode</th>
-                        <th class="px-6 py-3 text-left">Nama</th>
-                        <th class="px-6 py-3 text-right">Harga</th>
-                        <th class="px-6 py-3 text-center">Stok</th>
-                        <th class="px-6 py-3 text-left">Kategori</th>
-                        <th class="px-6 py-3 text-center">Aksi</th>
+                        <th class="px-4 py-2 border">Kode</th>
+                        <th class="px-4 py-2 border">Nama</th>
+                        <th class="px-4 py-2 border text-right">Harga</th>
+                        <th class="px-4 py-2 border text-center">Stok</th>
+                        <th class="px-4 py-2 border">Kategori</th>
+                        <th class="px-4 py-2 border text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100">
+                <tbody class="border-t">
                     @forelse($barangs as $barang)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $barang->kode }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $barang->nama }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-900 text-right font-medium">Rp{{ number_format($barang->harga,0,',','.') }}</td>
-                            <td class="px-6 py-4 text-sm text-center {{ $barang->stok <= 5 ? 'text-red-600 font-semibold' : 'text-gray-700' }}">
+                            <td class="px-4 py-2 border text-sm text-gray-900">{{ $barang->kode }}</td>
+                            <td class="px-4 py-2 border text-sm text-gray-900">{{ $barang->nama }}</td>
+                            <td class="px-4 py-2 border text-sm text-gray-900 text-right font-medium">Rp{{ number_format($barang->harga,0,',','.') }}</td>
+                            <td class="px-4 py-2 border text-sm text-center {{ $barang->stok <= 5 ? 'text-red-600 font-semibold' : 'text-gray-700' }}">
                                 {{ $barang->stok }}
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $barang->kategori->nama ?? '-' }}</td>
-                            <td class="px-6 py-4 text-sm text-center">
+                            <td class="px-4 py-2 border text-sm text-gray-900">{{ $barang->kategori->nama ?? '-' }}</td>
+                            <td class="px-4 py-2 border text-sm text-center">
                                 @auth
                                     @if(Auth::user()->role === 'admin')
                                         <a href="{{ route('stok.edit', $barang->id) }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">Edit</a>
@@ -67,7 +67,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-6 text-gray-400">
+                            <td colspan="6" class="text-center py-4 text-gray-400">
                                 Belum ada data barang
                             </td>
                         </tr>
@@ -76,9 +76,15 @@
             </table>
         </div>
 
-        <!-- Pagination -->
-        <div class="mt-6">
-            {{ $barangs->links() }}
+        <!-- Pagination dengan Info Dinamis -->
+        <div class="flex items-center justify-between mt-4">
+            <div class="text-sm text-gray-600">
+                Showing {{ $barangs->firstItem() }} to {{ $barangs->lastItem() }} of {{ $barangs->total() }} results
+            </div>
+
+            <div>
+                {{ $barangs->withQueryString()->links() }}
+            </div>
         </div>
     </div>
 </div>

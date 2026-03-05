@@ -9,6 +9,7 @@ use App\Models\TransaksiDetail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class KasirController extends Controller
 {
@@ -19,7 +20,23 @@ class KasirController extends Controller
         $total = collect($cart)->sum(function($item) {
             return $item['qty'] * $item['harga'];
         });
-        return view('kasir.index', compact('cart', 'total'));
+        
+        // Barang terlaris minggu ini (sama seperti di Dashboard)
+        $weekAgo = Carbon::now()->timezone('Asia/Jakarta')->subDays(7);
+        $barangPopuler = TransaksiDetail::select('barang_id', DB::raw('SUM(qty) as total_qty'))
+            ->whereHas('transaksi', function($q) use ($weekAgo) {
+                $q->where('created_at', '>=', $weekAgo);
+            })
+            ->groupBy('barang_id')
+            ->orderByDesc('total_qty')
+            ->with('barang')
+            ->limit(5)
+            ->get()
+            ->filter(function($item) {
+                return $item->barang !== null; // Filter out null barang
+            });
+        
+        return view('kasir.index', compact('cart', 'total', 'barangPopuler'));
     }
 
     // Scan/input kode barang (AJAX)

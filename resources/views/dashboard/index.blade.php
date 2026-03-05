@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Dashboard')
-@section('subtitle', 'Selamat datang di Warungku POS')
+@section('subtitle', 'Selamat datang di Sobatwarungku POS')
 
 @section('content')
 <!-- Statistik Cards -->

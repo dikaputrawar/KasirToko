@@ -41,7 +41,7 @@ function center($text) {
 }
 @endphp
 --------------------------------
-{{ center('WARUNGKU') }}
+{{ center('SOBATWARUNGKU') }}
 {{ center('Jl. Contoh No.123') }}
 {{ center('Telp: 08123456789') }}
 --------------------------------

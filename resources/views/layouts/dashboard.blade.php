@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'WarungKu') - Dashboard</title>
+    <title>@yield('title', 'Sobatwarungku') - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -22,7 +22,7 @@
                         <i class="fas fa-store text-green-600 text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold">Warungku</h1>
+                        <h1 class="text-xl font-bold">Sobatwarungku</h1>
                         <p class="text-xs text-green-100">Point of Sale</p>
                     </div>
                 </div>
@@ -31,16 +31,20 @@
             <!-- Menu -->
             <nav class="flex-1 p-4">
                 <ul class="space-y-2">
-                    <li>
-                        <a href="{{ route('dashboard.index') }}" 
-                           class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
-                           {{ request()->routeIs('dashboard.*') 
-                              ? 'bg-green-500 text-white shadow-md' 
-                              : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+                    @auth
+                        @if(Auth::user()->role === 'admin')
+                            <li>
+                                <a href="{{ route('dashboard.index') }}" 
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
+                                   {{ request()->routeIs('dashboard.*') 
+                                      ? 'bg-green-500 text-white shadow-md' 
+                                      : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
+                                    <i class="fas fa-home"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
                     <li>
                         <a href="{{ route('kasir.index') }}" 
                            class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
@@ -61,36 +65,40 @@
                             <span>Stok</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('kategori.index') }}" 
-                           class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
-                           {{ request()->routeIs('kategori.*') 
-                              ? 'bg-green-500 text-white shadow-md' 
-                              : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
-                            <i class="fas fa-tags"></i>
-                            <span>Kategori</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('laporan.index') }}" 
-                           class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
-                           {{ request()->routeIs('laporan.*') 
-                              ? 'bg-green-500 text-white shadow-md' 
-                              : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
-                            <i class="fas fa-file-alt"></i>
-                            <span>Laporan</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('analisis.index') }}" 
-                           class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
-                           {{ request()->routeIs('analisis.*') 
-                              ? 'bg-green-500 text-white shadow-md' 
-                              : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Analisis</span>
-                        </a>
-                    </li>
+                    @auth
+                        @if(Auth::user()->role === 'admin')
+                            <li>
+                                <a href="{{ route('kategori.index') }}" 
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
+                                   {{ request()->routeIs('kategori.*') 
+                                      ? 'bg-green-500 text-white shadow-md' 
+                                      : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Kategori</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('laporan.index') }}" 
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
+                                   {{ request()->routeIs('laporan.*') 
+                                      ? 'bg-green-500 text-white shadow-md' 
+                                      : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Laporan</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('analisis.index') }}" 
+                                   class="flex items-center space-x-3 px-4 py-3 rounded-lg transition
+                                   {{ request()->routeIs('analisis.*') 
+                                      ? 'bg-green-500 text-white shadow-md' 
+                                      : 'text-green-100 hover:bg-green-400 hover:text-white' }}">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Analisis</span>
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
                 </ul>
             </nav>
 
@@ -121,16 +129,8 @@
                     <p class="text-sm text-gray-500">@yield('subtitle')</p>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <input type="text" placeholder="Cari..." class="pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring focus:ring-green-500">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    </div>
-                    <button class="relative p-2 text-gray-600 hover:text-gray-800">
-                        <i class="fas fa-bell"></i>
-                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
                     <div class="text-sm text-gray-600">
-                        <i class="far fa-calendar"></i> {{ now()->locale('id')->format('d M Y') }}
+                        <i class="far fa-calendar"></i> {{ now()->timezone('Asia/Jakarta')->locale('id')->format('d M Y') }}
                     </div>
                 </div>
             </header>

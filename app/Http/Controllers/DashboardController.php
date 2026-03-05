@@ -13,8 +13,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $today = Carbon::today();
-        $weekAgo = Carbon::now()->subDays(7);
+        $today = Carbon::today()->timezone('Asia/Jakarta');
+        $weekAgo = Carbon::now()->timezone('Asia/Jakarta')->subDays(7);
 
         // Statistik
         $totalPenjualan = Transaksi::whereDate('created_at', $today)->sum('total');
@@ -42,8 +42,8 @@ class DashboardController extends Controller
         $labels = [];
         $data = [];
         for ($i = 6; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i)->format('Y-m-d');
-            $dayName = Carbon::now()->subDays($i)->locale('id')->format('D');
+            $date = Carbon::now()->timezone('Asia/Jakarta')->subDays($i)->format('Y-m-d');
+            $dayName = Carbon::now()->timezone('Asia/Jakarta')->subDays($i)->locale('id')->format('D');
             $labels[] = $dayName;
             $total = $grafik->firstWhere('tanggal', $date);
             $data[] = $total ? (int)$total->total : 0;
@@ -52,7 +52,7 @@ class DashboardController extends Controller
         // Grafik Penjualan Bulanan (REAL DATA - 12 bulan lengkap)
         $raw = DB::table('transaksis')
             ->selectRaw('MONTH(created_at) as bulan, SUM(total) as total')
-            ->whereYear('created_at', now()->year)
+            ->whereYear('created_at', Carbon::now()->timezone('Asia/Jakarta')->year)
             ->groupByRaw('MONTH(created_at)')
             ->pluck('total','bulan')
             ->toArray();

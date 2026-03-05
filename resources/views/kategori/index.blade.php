@@ -43,21 +43,21 @@
 
         <!-- Table -->
         <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                    <tr class="bg-gray-50 border-b border-gray-200">
-                        <th class="text-left py-4 px-4 font-semibold text-gray-600">Nama Kategori</th>
-                        <th class="text-left py-4 px-4 font-semibold text-gray-600">Jumlah Barang</th>
-                        <th class="text-center py-4 px-4 font-semibold text-gray-600">Aksi</th>
+            <table class="min-w-full text-sm text-left border border-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border">Nama Kategori</th>
+                        <th class="px-4 py-2 border">Jumlah Barang</th>
+                        <th class="px-4 py-2 border text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="border-t">
                     @forelse($kategoris as $kategori)
                         <tr class="hover:bg-gray-50 transition-colors duration-200">
-                            <td class="py-4 px-4">
+                            <td class="px-4 py-2 border">
                                 <span class="font-medium text-gray-800">{{ $kategori->nama }}</span>
                             </td>
-                            <td class="py-4 px-4">
+                            <td class="px-4 py-2 border">
                                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
@@ -65,7 +65,7 @@
                                     {{ $kategori->barangs_count }}
                                 </div>
                             </td>
-                            <td class="py-4 px-4">
+                            <td class="px-4 py-2 border">
                                 <div class="flex items-center justify-center gap-3">
                                     @auth
                                         @if(Auth::user()->role === 'admin')
@@ -105,12 +105,16 @@
             </table>
         </div>
 
-        <!-- Pagination -->
-        @if($kategoris->hasPages())
-            <div class="mt-6 flex justify-center">
-                {{ $kategoris->links() }}
+        <!-- Pagination dengan Info Dinamis -->
+        <div class="flex items-center justify-between mt-4">
+            <div class="text-sm text-gray-600">
+                Showing {{ $kategoris->firstItem() }} to {{ $kategoris->lastItem() }} of {{ $kategoris->total() }} results
             </div>
-        @endif
+
+            <div>
+                {{ $kategoris->withQueryString()->links() }}
+            </div>
+        </div>
     </div>
 </div>
 @endsection

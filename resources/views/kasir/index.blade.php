@@ -77,25 +77,27 @@
 
             <!-- Card Barang Populer -->
             <div class="bg-white rounded-2xl shadow-md p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Barang Populer</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Barang Terlaris Minggu Ini</h3>
                 <div class="grid grid-cols-2 gap-3">
-                    <!-- Dummy items -->
-                    <div class="p-3 border rounded-xl hover:bg-gray-50 cursor-pointer">
-                        <div class="text-xs text-gray-500">BR001</div>
-                        <div class="text-sm font-medium text-gray-800">Indomie Goreng</div>
-                    </div>
-                    <div class="p-3 border rounded-xl hover:bg-gray-50 cursor-pointer">
-                        <div class="text-xs text-gray-500">BR002</div>
-                        <div class="text-sm font-medium text-gray-800">Teh Botol</div>
-                    </div>
-                    <div class="p-3 border rounded-xl hover:bg-gray-50 cursor-pointer">
-                        <div class="text-xs text-gray-500">BR003</div>
-                        <div class="text-sm font-medium text-gray-800">Susu Indomilk</div>
-                    </div>
-                    <div class="p-3 border rounded-xl hover:bg-gray-50 cursor-pointer">
-                        <div class="text-xs text-gray-500">BR004</div>
-                        <div class="text-sm font-medium text-gray-800">Biskuit Regina</div>
-                    </div>
+                    @forelse($barangPopuler as $barang)
+                        @if($barang->barang)
+                            <div class="p-3 border rounded-xl hover:bg-gray-50 cursor-pointer transition-colors item-populer"
+                                 data-id="{{ $barang->barang->id }}"
+                                 data-kode="{{ $barang->barang->kode }}"
+                                 data-nama="{{ $barang->barang->nama }}"
+                                 data-harga="{{ $barang->barang->harga }}"
+                                 data-stok="{{ $barang->barang->stok }}">
+                                <div class="text-xs text-gray-500">{{ $barang->barang->kode }}</div>
+                                <div class="text-sm font-medium text-gray-800">{{ $barang->barang->nama }}</div>
+                                <div class="text-xs text-green-600 font-semibold">Rp{{ number_format($barang->barang->harga,0,',','.') }}</div>
+                                <div class="text-xs text-gray-400 mt-1">Terjual: {{ $barang->total_qty }} pcs</div>
+                            </div>
+                        @endif
+                    @empty
+                        <div class="col-span-2 text-center text-gray-500 py-4">
+                            <div class="text-sm">Belum ada data penjualan minggu ini</div>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>

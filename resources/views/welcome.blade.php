@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WarungKu - Aplikasi Kasir</title>
+    <title>Sobatwarungku - Aplikasi Kasir</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -66,11 +66,11 @@
     <div class="welcome-card">
         <div class="welcome-header">
             <i class="fas fa-store fa-3x mb-3"></i>
-            <h1 class="mb-2">WarungKu</h1>
+            <h1 class="mb-2">Sobatwarungku</h1>
             <p class="mb-0">Aplikasi Kasir Modern & Terpercaya</p>
         </div>
         <div class="welcome-body">
-            <h4 class="mb-4">Selamat Datang di WarungKu</h4>
+            <h4 class="mb-4">Selamat Datang di Sobatwarungku</h4>
             <p class="text-muted mb-4">
                 Sistem manajemen kasir yang mudah digunakan untuk warung dan toko kecil Anda.
             </p>

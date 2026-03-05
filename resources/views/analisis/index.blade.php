@@ -5,26 +5,6 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto">
-    <!-- Filter Periode Section -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
-        <form method="GET" action="" class="flex flex-wrap items-end gap-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
-                <input type="date" name="start" value="{{ $start }}" 
-                       class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Sampai Tanggal</label>
-                <input type="date" name="end" value="{{ $end }}" 
-                       class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-            </div>
-            <button type="submit" 
-                    class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200">
-                Terapkan Filter
-            </button>
-        </form>
-    </div>
-
     <!-- Section Grafik (Grid 2 Kolom) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- Grafik 1 -->
@@ -151,7 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels: monthNames,
                 datasets: [{
                     label: 'Penjualan Bulanan',
-                    data: monthlyData
+                    data: monthlyData,
+                    backgroundColor: 'rgb(34, 197, 94)',
+                    borderColor: 'rgb(22, 163, 74)',
+                    borderWidth: 1
                 }]
             },
             options: {
