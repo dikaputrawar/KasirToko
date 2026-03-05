@@ -12,7 +12,7 @@ class KategoriBarangController extends Controller
      */
     public function index()
     {
-        $kategoris = KategoriBarang::orderBy('id', 'desc')->paginate(10);
+        $kategoris = KategoriBarang::withCount('barangs')->orderBy('id', 'desc')->paginate(10);
         return view('kategori.index', compact('kategoris'));
     }
 

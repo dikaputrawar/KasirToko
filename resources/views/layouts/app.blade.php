@@ -24,7 +24,8 @@
                 @auth
                     @if(Auth::user()->role === 'kasir')
                         <li class="nav-item"><a class="nav-link" href="/kasir">Kasir</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('stok.view') }}">Lihat Stok</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/stok">Lihat Stok</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/kategori">Lihat Kategori</a></li>
                     @elseif(Auth::user()->role === 'admin')
                         <li class="nav-item"><a class="nav-link" href="/kasir">Kasir</a></li>
                         <li class="nav-item"><a class="nav-link" href="/stok">Stok</a></li>
