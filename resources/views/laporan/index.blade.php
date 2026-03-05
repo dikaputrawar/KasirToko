@@ -84,6 +84,10 @@
                                class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm transition duration-200">
                                 Cetak Resi
                             </a>
+                            <a href="{{ route('kasir.resi.pdf', $trx->id) }}"
+                               class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-sm transition duration-200 ml-1">
+                                Unduh PDF
+                            </a>
                         </td>
                     </tr>
 

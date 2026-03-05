@@ -8,6 +8,7 @@ use App\Models\Transaksi;
 use App\Models\TransaksiDetail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KasirController extends Controller
 {
@@ -166,5 +167,25 @@ class KasirController extends Controller
     {
         $transaksi = Transaksi::with(['details.barang', 'user'])->findOrFail($id);
         return view('kasir.resi', compact('transaksi'));
+    }
+
+    // Generate PDF resi dengan ukuran thermal 58mm
+    public function resiPdf($id)
+    {
+        $transaksi = Transaksi::with(['details.barang', 'user'])->findOrFail($id);
+        
+        // Dynamic height calculation
+        $itemCount = $transaksi->details->count();
+        $height = 120 + ($itemCount * 40) + 120; // Header + items + footer
+        
+        $pdf = Pdf::loadView('kasir.resi_pdf', compact('transaksi'))
+            ->setPaper([0, 0, 164, $height]) // 164pt ≈ 58mm, dynamic height
+            ->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'defaultFont' => 'Courier'
+            ]);
+        
+        return $pdf->download('resi-transaksi-' . $transaksi->id . '.pdf');
     }
 }
